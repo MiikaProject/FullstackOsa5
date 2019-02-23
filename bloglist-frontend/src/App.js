@@ -4,12 +4,10 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 
 const Logged = ({blogs,user,setUser}) => {
-  
   const clicked = () =>{
+    window.localStorage.clear()
     setUser(null)
-    
   }
-  
   return (
     <div>
     
@@ -19,9 +17,18 @@ const Logged = ({blogs,user,setUser}) => {
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
+      <Lisaaikkuna/>
     </div>
   )
 }
+
+const Lisaaikkuna = (props) => {
+  return(
+    <div>Lisää</div>
+  )
+}
+
+
 
 const Login = ({ handleLogin, username, setUsername, password, setPassword }) => {
   return (
@@ -62,6 +69,17 @@ const App = () => {
     )
   }, [])
 
+  useEffect(()=>{
+    const loggedUserJSON = window.localStorage.getItem('loggedUser')
+    if(loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+      blogService.setToken(user.token)
+    }
+
+
+  },[])
+
   const handleLogin = async (event) => {
     event.preventDefault()
     console.log('loggaa', username, password);
@@ -70,7 +88,8 @@ const App = () => {
       const user = await loginService.login({
         username,password
       })
-
+      window.localStorage.setItem('loggedUser',JSON.stringify(user))
+      blogService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
@@ -79,9 +98,9 @@ const App = () => {
 
 
     } catch (expection) {
-      console.log('käyttäjätunnis tai salasana virheellinen');
+      console.log('käyttäjätunnus tai salasana virheellinen');
       
-      setErrorMessage('käyttäjätunnis tai salasana virheellinen')
+      setErrorMessage('käyttäjätunnus tai salasana virheellinen')
       setTimeout(()=>{
         setErrorMessage(null)
       },5000)
