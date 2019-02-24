@@ -4,7 +4,7 @@ import blogService from '../services/blogs'
 
 const Blog = ({ blog, setBlogs, blogs, user }) => {
   //kuvaa kuinka suuri määrä infoa näytetään
-  const [BigDisplay, setBigDisplay] = useState(true)
+  const [BigDisplay, setBigDisplay] = useState(false)
 
   const blogStyle = {
     paddingTop: 10,
