@@ -1,18 +1,28 @@
 import React, { useState, useEffect } from 'react'
-import blogService from './services/blogs'
-import loginService from './services/login'
-import Toggleable from './components/Toggleable'
-import Logged from './components/Logged'
-import Login from './components/login'
+import blogService from '../services/blogs'
+import loginService from '../services/login'
+import Logged from './Logged'
+import Login from './login'
+import { useField } from '../hooks/index'
 
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
   const [ErrorMessage, setErrorMessage] = useState(null)
   const [SuccessMessage, setSuccessMessage] = useState(null)
   const [user, setUser] = useState(null)
+  const name = useField('text')
+  const salasana = useField('text')
+
+  const propsName = {
+    value:name.value,
+    onChange:name.onChange
+  }
+  const propsSalasana = {
+    value:salasana.value,
+    onChange:salasana.onChange
+  }
 
   useEffect(() => {
     blogService.getAll().then(blogs => {
@@ -35,17 +45,23 @@ const App = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    console.log('loggaa', username, password)
-
+    console.log('loggaa', name.value, salasana.value)
+    const username = name.value
+    const password = salasana.value
     try {
       const user = await loginService.login({
         username, password
       })
+      
+      
+      
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
       blogService.setToken(user.token)
       setUser(user)
       setUsername('')
-      setPassword('')
+      name.reset()
+      salasana.reset()
+      
 
     } catch (expection) {
       console.log('käyttäjätunnus tai salasana virheellinen')
@@ -60,9 +76,9 @@ const App = () => {
   if (user === null) {
     return (
       <div>
-        <Toggleable buttonLabel="login">
-          <Login handleLogin={handleLogin} setUsername={setUsername} username={username} setPassword={setPassword} password={password} ErrorMessage={ErrorMessage} setErrorMessage={setErrorMessage} />
-        </Toggleable>
+        
+          <Login handleLogin={handleLogin} setUsername={setUsername} username={username}  ErrorMessage={ErrorMessage} setErrorMessage={setErrorMessage} name={propsName} salasana={propsSalasana} />
+        
       </div>
     )
   }

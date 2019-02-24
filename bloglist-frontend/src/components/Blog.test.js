@@ -30,6 +30,7 @@ test('renders only title and author first', () => {
     expect(component.container).not.toHaveTextContent(
         '5'
     )
+    
 
 })
 
@@ -41,8 +42,6 @@ it('Clicking on name gives more information', async () => {
         likes: 5
     }
 
-    const mockHandler = jest.fn()
-
     const component= render(
         <Blog blog={blog}/>
     )
@@ -51,20 +50,12 @@ it('Clicking on name gives more information', async () => {
     
     expect(div).toHaveTextContent('Otsikko')
     expect(div).not.toHaveTextContent('url')
-    
-    
-    
+      
     const button = component.container.querySelector('.nimipalkki')
     fireEvent.click(button)
 
     const div2 = component.container.querySelector('.isotieto')
-    expect(div2).toHaveTextContent('url')
-    
-    
-          
-    
-    
-    
+    expect(div2).toHaveTextContent('url') 
 })
 
 

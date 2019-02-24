@@ -1,7 +1,11 @@
 import React from 'react'
 import Notication from './Notification'
+import {useField} from '../hooks/index'
 
-const Login = ({ handleLogin, username, setUsername, password, setPassword, ErrorMessage }) => {
+const Login = ({ handleLogin, username, setUsername, salasana, ErrorMessage, name }) => {
+
+
+
     return (
       <div>
         <h2>login in to application</h2>
@@ -10,17 +14,14 @@ const Login = ({ handleLogin, username, setUsername, password, setPassword, Erro
   
           <div>
             kayttajatunnus
-          <input type="text" value={username} name="Username" onChange={({ target }) => setUsername(target.value)}
+          <input {...name}
             >
             </input>
           </div>
           <div>
             salasana
               <input
-              type="password"
-              value={password}
-              name="Password"
-              onChange={({ target }) => setPassword(target.value)}
+              {...salasana}
             />
           </div>
           <button type="submit">kirjaudu</button>
