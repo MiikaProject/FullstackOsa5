@@ -43,15 +43,28 @@ it('Clicking on name gives more information', async () => {
 
     const mockHandler = jest.fn()
 
-    const { getByText } = render(
-        <Blog blog={blog} onClick={mockHandler} />
+    const component= render(
+        <Blog blog={blog}/>
     )
 
-    const button = getByText('like')
-    fireEvent.click(button)
+    const div = component.container.querySelector('.pienitieto')
+    
+    expect(div).toHaveTextContent('Otsikko')
+    expect(div).not.toHaveTextContent('url')
+    
+    
+    
+    const button = component.container.querySelector('.nimipalkki')
     fireEvent.click(button)
 
-    expect(mockHandler.mock.calls.length).toBe(2)
+    const div2 = component.container.querySelector('.isotieto')
+    expect(div2).toHaveTextContent('url')
+    
+    
+          
+    
+    
+    
 })
 
 

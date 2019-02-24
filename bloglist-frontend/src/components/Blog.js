@@ -105,8 +105,8 @@ const Blog = ({ blog, setBlogs, blogs, user }) => {
 
   if (BigDisplay === false) {
     return (
-      <div style={blogStyle}>
-        <div onClick={toggleDisplay}>
+      <div style={blogStyle} className='pienitieto'>
+        <div onClick={toggleDisplay} className='nimipalkki'>
           {blog.title} {blog.author}
         </div>
 
@@ -115,8 +115,8 @@ const Blog = ({ blog, setBlogs, blogs, user }) => {
   } else {
     if (blog.user === undefined || blog.user.username !== user.username) {
       return (
-        <div style={blogStyle}>
-          <div onClick={toggleDisplay}>
+        <div style={blogStyle} className='isotieto'>
+          <div onClick={toggleDisplay} className='nimipalkki'>
             <span>{blog.title} {blog.author}</span>
           </div>
           <div>{blog.url}</div>
@@ -126,8 +126,8 @@ const Blog = ({ blog, setBlogs, blogs, user }) => {
       )
     }
     return (
-      <div style={blogStyle}>
-        <div onClick={toggleDisplay}>
+      <div style={blogStyle} className='isotieto'>
+        <div onClick={toggleDisplay} className='nimipalkki'>
           <span>{blog.title} {blog.author}</span>
         </div>
         <div>{blog.url}</div>
